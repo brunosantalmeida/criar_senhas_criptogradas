@@ -14,5 +14,20 @@ CREATE TABLE IF NOT EXISTS usuarios (
     senha TEXT
 )
 """)
+def hash_senha(senha):
+    return hashlib.sha256(senha.encode()).hexdigest()
 
+def cadastrar():
+    nome = input("Nome de usuário: ")
+    senha = input("Senha: ")
+    senha_hash = hash_senha(senha)
+
+    cursor.execute("INSERT INTO usuarios (nome, senha) VALUES (?, ?)", (nome, senha_hash))
+    conn.commit()
+    print("Usuário cadastrado com sucesso!")
+
+def login():
+    nome = input("Nome de usuário: ")
+    senha = input("Senha: ")
+    senha_hash = hash_senha(senha)
 

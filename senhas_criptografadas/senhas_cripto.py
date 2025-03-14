@@ -31,3 +31,23 @@ def login():
     senha = input("Senha: ")
     senha_hash = hash_senha(senha)
 
+    cursor.execute("SELECT * FROM usuarios WHERE nome = ? AND senha = ?", (nome, senha_hash))
+    
+    if cursor.fetchone():
+        print("Login bem-sucedido!")
+    else:
+        print("Usuário ou senha incorretos!")
+
+while True:
+    opcao = input("\n1 - Cadastrar\n2 - Login\n3 - Sair\nEscolha: ")
+
+    if opcao == "1":
+        cadastrar()
+    elif opcao == "2":
+        login()
+    elif opcao == "3":
+        break
+    else:
+        print("Opção inválida!")
+
+conn.close()

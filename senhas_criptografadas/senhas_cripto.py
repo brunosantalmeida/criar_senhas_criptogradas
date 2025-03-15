@@ -1,6 +1,6 @@
 import sqlite3
 import hashlib
-
+import getpass
 
 # Conectar ao banco de dados
 conn = sqlite3.connect("usuarios.db")
@@ -19,7 +19,7 @@ def hash_senha(senha):
 
 def cadastrar():
     nome = input("Nome de usuário: ")
-    senha = input("Senha: ")
+    senha = getpass.getpass("Senha: ") # Oculta a senha ao digitar
     senha_hash = hash_senha(senha)
 
     cursor.execute("INSERT INTO usuarios (nome, senha) VALUES (?, ?)", (nome, senha_hash))
@@ -28,7 +28,7 @@ def cadastrar():
 
 def login():
     nome = input("Nome de usuário: ")
-    senha = input("Senha: ")
+    senha = getpass.getpass("Senha: ") # Oculta a senha ao digitar
     senha_hash = hash_senha(senha)
 
     cursor.execute("SELECT * FROM usuarios WHERE nome = ? AND senha = ?", (nome, senha_hash))
